@@ -53,13 +53,15 @@ export default class MyRenderer extends Renderer {
           this.ctx.fillStyle = 'rgb(200, 0, 0)';
         } else if (this.sprites[objId].el === 'boxy2') {
           this.ctx.fillStyle = 'rgb(0, 0, 200)';
+        } else if (this.sprites[objId].el === 'bullet') {
+          this.ctx.fillStyle = 'rgb(255,255,255)';
         }
 
         this.ctx.fillRect(
           this.gameEngine.world.objects[objId].position.x,
           this.gameEngine.world.objects[objId].position.y,
-          30,
-          30
+          this.gameEngine.world.objects[objId].width,
+          this.gameEngine.world.objects[objId].height
         );
       }
     }

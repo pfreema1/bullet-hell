@@ -27,10 +27,9 @@ export default class MyClientEngine extends ClientEngine {
   }
 
   onDOMLoaded() {
+    // listener for mouse click
     document.addEventListener('click', e => {
-      console.log('clicked!');
-
-      this.sendInput('shoot', { movement: true });
+      this.sendInput('shoot', { movement: true, x: e.clientX, y: e.clientY });
     });
   }
 }

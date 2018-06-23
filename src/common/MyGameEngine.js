@@ -28,7 +28,7 @@ export default class MyGameEngine extends GameEngine {
 
     // register game logic to run as post step function
     this.on('postStep', () => {
-      this.postStepHandleBall();
+      this.postStepHandleBullet();
     });
 
     // create references to game objects
@@ -84,23 +84,21 @@ export default class MyGameEngine extends GameEngine {
 
     // get the player paddle tied to the player socket
     let player = this.world.queryObject({ playerId });
-    // console.log('player:  ', player);
+
     if (player) {
-      if (inputData.input === 'up') {
-        player.position.y -= 5;
-      } else if (inputData.input === 'down') {
-        player.position.y += 5;
-      } else if (inputData.input === 'left') {
-        player.position.x -= 5;
-      } else if (inputData.input === 'right') {
-        player.position.x += 5;
-      } else if (inputData.input === 'shoot') {
-        console.log('shoot!');
-      }
+      player.handleInput(inputData, this);
     }
   }
 
-  postStepHandleBall() {
+  addBullet(position) {
+    this.addObjectToWorld(
+      new Bullet(this, null, {
+        position: new TwoVector(position.x, position.y)
+      })
+    );
+  }
+
+  postStepHandleBullet() {
     // if (!this.ball) return;
     // // CHECK LEFT EDGE:
     // if (
