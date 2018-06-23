@@ -2,10 +2,10 @@
 
 import GameEngine from 'lance/GameEngine';
 import SimplePhysicsEngine from 'lance/physics/SimplePhysicsEngine';
-import PlayerAvatar from './PlayerAvatar';
+// import PlayerAvatar from './PlayerAvatar';
 import TwoVector from 'lance/serialize/TwoVector';
-import Paddle from './Paddle';
-import Ball from './Ball';
+// import Paddle from './Paddle';
+// import Ball from './Ball';
 import Boxy from './Boxy';
 import Bullet from './Bullet';
 
@@ -94,6 +94,8 @@ export default class MyGameEngine extends GameEngine {
         player.position.x -= 5;
       } else if (inputData.input === 'right') {
         player.position.x += 5;
+      } else if (inputData.input === 'shoot') {
+        console.log('shoot!');
       }
     }
   }

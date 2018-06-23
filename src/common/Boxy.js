@@ -9,8 +9,6 @@ export default class Boxy extends DynamicObject {
     this.class = Boxy;
   }
 
-  moveUp() {}
-
   onAddToWorld(gameEngine) {
     if (gameEngine.renderer) {
       gameEngine.renderer.addSprite(this, 'boxy');

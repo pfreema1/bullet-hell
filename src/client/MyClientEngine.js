@@ -11,7 +11,26 @@ export default class MyClientEngine extends ClientEngine {
     this.controls.bindKey('s', 'down', { repeat: true });
     this.controls.bindKey('a', 'left', { repeat: true });
     this.controls.bindKey('d', 'right', { repeat: true });
-
     this.controls.bindKey('space', 'space');
+
+    if (
+      document.readyState === 'complete' ||
+      document.readyState === 'loaded' ||
+      document.readyState === 'interactive'
+    ) {
+      this.onDOMLoaded();
+    } else {
+      document.addEventListener('DOMContentLoaded', () => {
+        this.onDOMLoaded();
+      });
+    }
+  }
+
+  onDOMLoaded() {
+    document.addEventListener('click', e => {
+      console.log('clicked!');
+
+      this.sendInput('shoot', { movement: true });
+    });
   }
 }

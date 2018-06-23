@@ -48,11 +48,13 @@ export default class MyRenderer extends Renderer {
     for (let objId of Object.keys(this.sprites)) {
       //   console.log('this.sprites[objId]:  ', this.sprites[objId]);
       if (this.sprites[objId].el) {
+        // set color of boxy
         if (this.sprites[objId].el === 'boxy1') {
           this.ctx.fillStyle = 'rgb(200, 0, 0)';
         } else if (this.sprites[objId].el === 'boxy2') {
           this.ctx.fillStyle = 'rgb(0, 0, 200)';
         }
+
         this.ctx.fillRect(
           this.gameEngine.world.objects[objId].position.x,
           this.gameEngine.world.objects[objId].position.y,
