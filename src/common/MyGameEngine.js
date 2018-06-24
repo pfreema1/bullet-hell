@@ -9,10 +9,16 @@ import TwoVector from 'lance/serialize/TwoVector';
 import Boxy from './Boxy';
 import Bullet from './Bullet';
 
+const CANVAS_WIDTH = 800;
+const CANVAS_HEIGHT = 400;
+
 export default class MyGameEngine extends GameEngine {
   constructor(options) {
     super(options);
     this.physicsEngine = new SimplePhysicsEngine({ gameEngine: this });
+
+    // create array of references to bullet
+    this.bulletArr = [];
   }
 
   // register the game objects on the serializer
@@ -91,11 +97,13 @@ export default class MyGameEngine extends GameEngine {
   }
 
   addBullet(position) {
-    this.addObjectToWorld(
-      new Bullet(this, null, {
-        position: new TwoVector(position.x, position.y)
-      })
-    );
+    console.log('add bullet being called!');
+    let bullet = new Bullet(this, null, {
+      position: new TwoVector(position.x, position.y)
+    });
+    this.addObjectToWorld(bullet);
+
+    this.bulletArr.push(bullet);
   }
 
   postStepHandleBullet() {
@@ -141,5 +149,19 @@ export default class MyGameEngine extends GameEngine {
     //   this.ball.position.y = HEIGHT - 1;
     //   this.ball.velocity.y *= -1;
     // }
+
+    for (let bullet of this.bulletArr) {
+      if (bullet.position.x <= 0) {
+        bullet.velocity.x *= -1;
+      } else if (bullet.position.x >= CANVAS_WIDTH) {
+        bullet.velocity.x *= -1;
+      } else if (bullet.position.y <= 0) {
+        bullet.velocity.y *= -1;
+      } else if (bullet.position.y >= CANVAS_HEIGHT) {
+        bullet.velocity.y *= -1;
+      }
+    }
+
+    console.log('this.bulletArr.length:  ', this.bulletArr.length);
   }
 }

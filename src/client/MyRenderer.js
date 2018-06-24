@@ -22,8 +22,6 @@ export default class MyRenderer extends Renderer {
 
   onDOMLoaded() {
     this.canvas = document.querySelector('#gameCanvas');
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
     this.ctx = this.canvas.getContext('2d');
 
     // this.ctx.fillStyle = 'rgb(200, 0, 0)';

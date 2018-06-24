@@ -13,6 +13,8 @@ export default class MyClientEngine extends ClientEngine {
     this.controls.bindKey('d', 'right', { repeat: true });
     this.controls.bindKey('space', 'space');
 
+    this.lastClick = Date.now();
+
     if (
       document.readyState === 'complete' ||
       document.readyState === 'loaded' ||
@@ -29,6 +31,10 @@ export default class MyClientEngine extends ClientEngine {
   onDOMLoaded() {
     // listener for mouse click
     document.addEventListener('click', e => {
+      // if (Date.now() > this.lastClick + 1000) {
+      //   this.sendInput('shoot', { movement: true, x: e.clientX, y: e.clientY });
+      //   this.lastClick = Date.now();
+      // }
       this.sendInput('shoot', { movement: true, x: e.clientX, y: e.clientY });
     });
   }
