@@ -5,6 +5,7 @@ import Renderer from 'lance/render/Renderer';
 export default class MyRenderer extends Renderer {
   constructor(gameEngine, clientEngine) {
     super(gameEngine, clientEngine);
+
     this.sprites = {};
 
     if (
@@ -31,18 +32,10 @@ export default class MyRenderer extends Renderer {
   draw(t, dt) {
     super.draw(t, dt);
 
+    // clear previous frame so we can animate
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // iterate through all the sprite game objects
-    // for (let objId of Object.keys(this.sprites)) {
-    //   if (this.sprites[objId].el) {
-    //     this.sprites[objId].el.style.top =
-    //       this.gameEngine.world.objects[objId].position.y + 'px';
-    //     this.sprites[objId].el.style.left =
-    //       this.gameEngine.world.objects[objId].position.x + 'px';
-    //   }
-    // }
-
+    // loop through sprites
     for (let objId of Object.keys(this.sprites)) {
       //   console.log('this.sprites[objId]:  ', this.sprites[objId]);
       if (this.sprites[objId].el) {
@@ -66,7 +59,13 @@ export default class MyRenderer extends Renderer {
   }
 
   addSprite(obj, objName) {
-    if (objName === 'boxy') objName += obj.playerId;
+    // console.log('running addSprite');
+    console.log('addSprite: obj:  ', obj);
+    console.log('addSprite: objName:  ', objName);
+
+    if (objName === 'boxy') {
+      objName += obj.playerId;
+    }
 
     this.sprites[obj.id] = {
       //   el: document.querySelector('.' + objName)

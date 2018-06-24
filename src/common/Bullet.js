@@ -13,10 +13,15 @@ export default class Bullet extends DynamicObject {
   constructor(gameEngine, options, props) {
     super(gameEngine, options, props);
     this.class = Bullet;
-    this.velocity.set(2, 2);
+
+    this.setupVelocity();
 
     this.width = 10;
     this.height = 10;
+  }
+
+  setupVelocity() {
+    this.velocity.set(0, 0);
   }
 
   onAddToWorld(gameEngine) {

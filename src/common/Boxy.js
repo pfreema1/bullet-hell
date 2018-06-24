@@ -17,7 +17,8 @@ export default class Boxy extends DynamicObject {
   shoot(mousePos, gameEngine) {
     // console.log('this boxy be shootin!');
     // console.log('mousePos:  ', mousePos);
-    gameEngine.addBullet(mousePos);
+    // gameEngine.addBullet(mousePos);
+    gameEngine.setBulletActive(mousePos);
   }
 
   // this gets called from processInput in MyGameEngine
