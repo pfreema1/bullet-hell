@@ -20,6 +20,7 @@ export default class Bullet extends DynamicObject {
   }
 
   onAddToWorld(gameEngine) {
+    // console.log('running add to world!');
     if (gameEngine.renderer) {
       gameEngine.renderer.addSprite(this, 'bullet');
     }

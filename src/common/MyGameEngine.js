@@ -39,6 +39,7 @@ export default class MyGameEngine extends GameEngine {
 
     // create references to game objects
     this.on('objectAdded', object => {
+      // console.log('running objectAdded:  ', object);
       if (object.class === Bullet) {
         this.bullet = object;
       } else if (object.playerId === 1) {
@@ -92,12 +93,18 @@ export default class MyGameEngine extends GameEngine {
     let player = this.world.queryObject({ playerId });
 
     if (player) {
-      player.handleInput(inputData, this);
+      if (inputData.input === 'shoot') {
+        this.addBullet({
+          x: inputData.options.x,
+          y: inputData.options.y
+        });
+      } else {
+        player.handleInput(inputData, this);
+      }
     }
   }
 
   addBullet(position) {
-    console.log('add bullet being called!');
     let bullet = new Bullet(this, null, {
       position: new TwoVector(position.x, position.y)
     });
@@ -162,6 +169,6 @@ export default class MyGameEngine extends GameEngine {
       }
     }
 
-    console.log('this.bulletArr.length:  ', this.bulletArr.length);
+    // console.log('this.bulletArr.length:  ', this.bulletArr.length);
   }
 }
