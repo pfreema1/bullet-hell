@@ -2,10 +2,7 @@
 
 import GameEngine from 'lance/GameEngine';
 import SimplePhysicsEngine from 'lance/physics/SimplePhysicsEngine';
-// import PlayerAvatar from './PlayerAvatar';
 import TwoVector from 'lance/serialize/TwoVector';
-// import Paddle from './Paddle';
-// import Ball from './Ball';
 import Boxy from './Boxy';
 import Bullet from './Bullet';
 
@@ -18,8 +15,7 @@ export default class MyGameEngine extends GameEngine {
     super(options);
     this.physicsEngine = new SimplePhysicsEngine({ gameEngine: this });
 
-    // create array of references to bullet
-    this.bulletArr = [];
+    this.currentBulletToSetActive = 3;
   }
 
   // register the game objects on the serializer
@@ -35,7 +31,7 @@ export default class MyGameEngine extends GameEngine {
 
     // register game logic to run as post step function
     this.on('postStep', () => {
-      this.postStepHandleBullet();
+      // this.postStepHandleBullet();
     });
 
     // create references to game objects
@@ -62,19 +58,17 @@ export default class MyGameEngine extends GameEngine {
 
     this.addObjectToWorld(
       new Boxy(this, null, {
-        position: new TwoVector(200, 200),
+        position: new TwoVector(600, 200),
         playerId: 2
       })
     );
 
     for (let i = 0; i < BULLET_COUNT; i++) {
       let bullet = new Bullet(this, null, {
-        position: new TwoVector(600, 600)
+        position: new TwoVector(10 + i, 10 + i)
       });
 
       this.addObjectToWorld(bullet);
-
-      this.bulletArr.push(bullet);
     }
   }
 
@@ -89,34 +83,28 @@ export default class MyGameEngine extends GameEngine {
     }
   }
 
-  // addBullet(position) {
-  //   let bullet = new Bullet(this, null, {
-  //     position: new TwoVector(position.x, position.y)
-  //   });
-  //   this.addObjectToWorld(bullet);
-
-  //   this.bulletArr.push(bullet);
-  // }
-
   setBulletActive(mousePos) {
     // console.log('running setBulletActive in gameengine!');
-    // console.log('this:  ', this);
-    console.log('bulletArr length:  ', this.bulletArr.length);
+    console.log('this:  ', this);
+    console.log('this.world.objects type:  ', typeof this.world.objects);
+
+    this.world.objects[this.currentBulletToSetActive].velocity.set(2, 2);
+
+    this.currentBulletToSetActive += 1;
   }
 
-  postStepHandleBullet() {
-    for (let bullet of this.bulletArr) {
-      if (bullet.position.x <= 0) {
-        bullet.velocity.x *= -1;
-      } else if (bullet.position.x >= CANVAS_WIDTH) {
-        bullet.velocity.x *= -1;
-      } else if (bullet.position.y <= 0) {
-        bullet.velocity.y *= -1;
-      } else if (bullet.position.y >= CANVAS_HEIGHT) {
-        bullet.velocity.y *= -1;
-      }
-    }
+  // postStepHandleBullet() {
+  //   for (let bullet of this.world.bulletArr) {
+  //     if (bullet.position.x <= 0) {
+  //       bullet.velocity.x *= -1;
+  //     } else if (bullet.position.x >= CANVAS_WIDTH) {
+  //       bullet.velocity.x *= -1;
+  //     } else if (bullet.position.y <= 0) {
+  //       bullet.velocity.y *= -1;
+  //     } else if (bullet.position.y >= CANVAS_HEIGHT) {
+  //       bullet.velocity.y *= -1;
+  //     }
+  //   }
 
-    // console.log('this.bulletArr.length:  ', this.bulletArr.length);
-  }
+  // }
 }
