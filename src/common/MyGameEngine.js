@@ -22,8 +22,6 @@ export default class MyGameEngine extends GameEngine {
 
   // register the game objects on the serializer
   registerClasses(serializer) {
-    // serializer.registerClass(Paddle);
-    // serializer.registerClass(Ball);
     serializer.registerClass(Boxy);
     serializer.registerClass(Bullet);
   }
@@ -84,6 +82,10 @@ export default class MyGameEngine extends GameEngine {
     Object.keys(obj).forEach(key => {
       if (obj[key].playerId !== 0) {
         console.log('box was hit!  playerId:  ', obj[key].playerId);
+        // change boxy's color
+        let player = this.world.queryObject(obj[key].playerId);
+        // console.log('player:  ', player);
+        player.handleHitByBullet();
       }
     });
   }

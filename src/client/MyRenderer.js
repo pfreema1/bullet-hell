@@ -41,9 +41,13 @@ export default class MyRenderer extends Renderer {
       if (this.sprites[objId].el) {
         // set color of boxy
         if (this.sprites[objId].el === 'boxy1') {
-          this.ctx.fillStyle = 'rgb(200, 0, 0)';
+          this.ctx.fillStyle = this.gameEngine.world.objects[
+            objId
+          ].currentColor;
         } else if (this.sprites[objId].el === 'boxy2') {
-          this.ctx.fillStyle = 'rgb(0, 0, 200)';
+          this.ctx.fillStyle = this.gameEngine.world.objects[
+            objId
+          ].currentColor;
         } else if (this.sprites[objId].el === 'bullet') {
           this.ctx.fillStyle = 'rgb(255,255,255)';
         }

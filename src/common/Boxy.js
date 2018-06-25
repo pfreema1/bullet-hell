@@ -12,6 +12,15 @@ export default class Boxy extends DynamicObject {
 
     this.width = 30;
     this.height = 30;
+
+    this.colorArr = [
+      'rgb(200, 0, 0)',
+      'rgb(200, 200, 0)',
+      'rgb(10, 200, 0)',
+      'rgb(40, 0, 20)'
+    ];
+
+    this.currentColor = this.colorArr[parseInt(Math.random() * 3)];
   }
 
   shoot(mousePos, gameEngine) {
@@ -19,6 +28,10 @@ export default class Boxy extends DynamicObject {
     // console.log('mousePos:  ', mousePos);
     // gameEngine.addBullet(mousePos);
     gameEngine.setBulletActive(mousePos);
+  }
+
+  handleHitByBullet() {
+    this.currentColor = this.colorArr[parseInt(Math.random() * 3)];
   }
 
   // this gets called from processInput in MyGameEngine
