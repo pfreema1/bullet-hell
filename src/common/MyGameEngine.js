@@ -16,6 +16,8 @@ export default class MyGameEngine extends GameEngine {
     this.physicsEngine = new SimplePhysicsEngine({ gameEngine: this });
 
     this.currentBulletToSetActive = 3;
+
+    this.bulletArr = [];
   }
 
   // register the game objects on the serializer
@@ -31,7 +33,7 @@ export default class MyGameEngine extends GameEngine {
 
     // register game logic to run as post step function
     this.on('postStep', () => {
-      // this.postStepHandleBullet();
+      this.postStepHandleBullet();
     });
 
     // create references to game objects
@@ -63,9 +65,10 @@ export default class MyGameEngine extends GameEngine {
       })
     );
 
+    // create bullets of amount BULLET_COUNT
     for (let i = 0; i < BULLET_COUNT; i++) {
       let bullet = new Bullet(this, null, {
-        position: new TwoVector(10 + i, 10 + i)
+        position: new TwoVector(100 + i, 10 + i)
       });
 
       this.addObjectToWorld(bullet);
@@ -90,21 +93,22 @@ export default class MyGameEngine extends GameEngine {
 
     this.world.objects[this.currentBulletToSetActive].velocity.set(2, 2);
 
+    this.bulletArr.push(this.world.objects[this.currentBulletToSetActive]);
+
     this.currentBulletToSetActive += 1;
   }
 
-  // postStepHandleBullet() {
-  //   for (let bullet of this.world.bulletArr) {
-  //     if (bullet.position.x <= 0) {
-  //       bullet.velocity.x *= -1;
-  //     } else if (bullet.position.x >= CANVAS_WIDTH) {
-  //       bullet.velocity.x *= -1;
-  //     } else if (bullet.position.y <= 0) {
-  //       bullet.velocity.y *= -1;
-  //     } else if (bullet.position.y >= CANVAS_HEIGHT) {
-  //       bullet.velocity.y *= -1;
-  //     }
-  //   }
-
-  // }
+  postStepHandleBullet() {
+    for (let bullet of this.bulletArr) {
+      if (bullet.position.x <= 0) {
+        bullet.velocity.x *= -1;
+      } else if (bullet.position.x >= CANVAS_WIDTH) {
+        bullet.velocity.x *= -1;
+      } else if (bullet.position.y <= 1) {
+        bullet.velocity.y *= -1;
+      } else if (bullet.position.y >= CANVAS_HEIGHT) {
+        bullet.velocity.y *= -1;
+      }
+    }
+  }
 }

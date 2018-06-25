@@ -59,9 +59,8 @@ export default class MyRenderer extends Renderer {
   }
 
   addSprite(obj, objName) {
-    // console.log('running addSprite');
-    console.log('addSprite: obj:  ', obj);
-    console.log('addSprite: objName:  ', objName);
+    // console.log('addSprite: obj:  ', obj);
+    // console.log('addSprite: objName:  ', objName);
 
     if (objName === 'boxy') {
       objName += obj.playerId;
