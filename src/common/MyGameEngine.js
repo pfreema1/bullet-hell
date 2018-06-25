@@ -36,6 +36,10 @@ export default class MyGameEngine extends GameEngine {
       this.postStepHandleBullet();
     });
 
+    this.on('collisionStart', obj => {
+      this.handleCollisionStart(obj);
+    });
+
     // create references to game objects
     this.on('objectAdded', object => {
       // console.log('running objectAdded:  ', object);
@@ -68,11 +72,20 @@ export default class MyGameEngine extends GameEngine {
     // create bullets of amount BULLET_COUNT
     for (let i = 0; i < BULLET_COUNT; i++) {
       let bullet = new Bullet(this, null, {
-        position: new TwoVector(100 + i, 10 + i)
+        position: new TwoVector(100 + i, 10 + i * 20)
       });
 
       this.addObjectToWorld(bullet);
     }
+  }
+
+  handleCollisionStart(obj) {
+    // console.log('collisaion obj:  ', obj);
+    Object.keys(obj).forEach(key => {
+      if (obj[key].playerId !== 0) {
+        console.log('box was hit!  playerId:  ', obj[key].playerId);
+      }
+    });
   }
 
   processInput(inputData, playerId) {
@@ -99,6 +112,9 @@ export default class MyGameEngine extends GameEngine {
   }
 
   postStepHandleBullet() {
+    this.physicsEngine.collisionDetection.detect();
+
+    // bouncing of bullets
     for (let bullet of this.bulletArr) {
       if (bullet.position.x <= 0) {
         bullet.velocity.x *= -1;
